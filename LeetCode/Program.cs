@@ -4,6 +4,6 @@ internal static class Program
 {
     public static void Main()
     {
-        Console.WriteLine(new Solution().MergeAlternately("abcd", "pq"));
+        Console.WriteLine(new Solution().GuessNumber(2126753390));
     }
 }
