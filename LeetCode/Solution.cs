@@ -79,6 +79,32 @@ public class Solution : GuessGame
 
         return str1[..(n1 | n2)];
     }
+
+    //283
+    public void MoveZeroes(int[] nums)
+    {
+        int i = 0;
+        int j = 0;
+        while (i < nums.Length && j < nums.Length)
+        {
+            if (nums[i] != 0)
+            {
+                i++;
+                j++;
+                continue;
+            }
+
+            while (j < nums.Length - 1 && nums[j] == 0)
+            {
+                j++;
+            }
+
+            nums[i] = nums[j];
+            nums[j] = 0;
+            i++;
+            j++;
+        }
+    }
 }
 
 public class GuessGame
