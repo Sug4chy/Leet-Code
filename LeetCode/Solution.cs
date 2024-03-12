@@ -105,6 +105,25 @@ public class Solution : GuessGame
             j++;
         }
     }
+    
+    //1732
+    public int LargestAltitude(int[] gain)
+    {
+        int n = gain.Length;
+        int altitude = 0;
+        int maxAltitude = int.MinValue;
+        for (int i = 0; i < n; i++)
+        {
+            if (altitude >= maxAltitude)
+            {
+                maxAltitude = altitude;
+            }
+            
+            altitude += gain[i];
+        }
+
+        return maxAltitude;
+    }
 }
 
 public class GuessGame
