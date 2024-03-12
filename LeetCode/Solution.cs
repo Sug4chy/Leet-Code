@@ -54,6 +54,31 @@ public class Solution : GuessGame
 
         return -1;
     }
+
+    //1071
+    public string GcdOfStrings(string str1, string str2)
+    {
+        if (str1 + str2 != str2 + str1)
+        {
+            return "";
+        }
+
+        int n1 = str1.Length;
+        int n2 = str2.Length;
+        while (n1 != 0 && n2 != 0)
+        {
+            if (n1 > n2)
+            {
+                n1 %= n2;
+            }
+            else
+            {
+                n2 %= n1;
+            }
+        }
+
+        return str1[..(n1 | n2)];
+    }
 }
 
 public class GuessGame
