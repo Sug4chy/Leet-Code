@@ -4,11 +4,6 @@ internal static class Program
 {
     public static void Main()
     {
-        int[] a = [0, 1, 0, 3, 12];
-        new Solution().MoveZeroes(a);
-        foreach (int i in a)
-        {
-            Console.WriteLine(i);
-        }
+        Console.WriteLine(new Solution().KidsWithCandies([2, 3, 5, 1, 3], 3));
     }
 }
