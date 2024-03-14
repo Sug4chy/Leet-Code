@@ -132,6 +132,25 @@ public class Solution : GuessGame
         return candies.Select(c => c + extraCandies >= max)
             .ToList();
     }
+    
+    //605
+    public bool CanPlaceFlowers(int[] flowerbed, int n)
+    {
+        bool prevIsEmpty = true;
+        for (int i = 0; i < flowerbed.Length && n > 0; i++) {
+            bool empty = flowerbed[i] == 0;
+            bool nextIsEmpty = i + 1 >= flowerbed.Length || flowerbed[i + 1] == 0;
+            if (prevIsEmpty && empty && nextIsEmpty) {
+                flowerbed[i] = 1;
+                n--;
+                prevIsEmpty = false;
+            } else {
+                prevIsEmpty = empty;
+            }            
+        }
+
+        return n == 0;
+    }
 }
 
 public class GuessGame
