@@ -151,6 +151,41 @@ public class Solution : GuessGame
 
         return n == 0;
     }
+
+    //345
+    public string ReverseVowels(string s)
+    {
+        if (s.Length <= 1)
+        { 
+            return s;
+        }
+
+        char[] vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
+        char[] str = s.ToCharArray();
+        int i = 0;
+        int j = s.Length - 1;
+        while (i < j)
+        {
+            if (!vowels.Contains(str[i]))
+            {
+                i++;
+            }
+
+            if (!vowels.Contains(str[j]))
+            {
+                j--;
+            }
+
+            if (vowels.Contains(str[i]) && vowels.Contains(str[j]))
+            {
+                (str[i], str[j]) = (str[j], str[i]);
+                i++;
+                j--;
+            }
+        }
+
+        return new string(str);
+    }
 }
 
 public class GuessGame
