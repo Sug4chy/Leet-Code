@@ -186,6 +186,50 @@ public class Solution : GuessGame
 
         return new string(str);
     }
+
+    //151
+    public string ReverseWords(string s)
+    => string.Join(' ', s.Trim()
+        .Split(' ', 
+            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+        .Reverse()
+        .Select(str => str.Trim()));
+    
+    //238
+    public int[] ProductExceptSelf(int[] nums)
+    {
+        int zeroes = 0;
+        int product = 1;
+        foreach (int i in nums) 
+        {
+            if (i != 0)
+            {
+                product *= i;
+                continue;
+            }
+
+            zeroes++;
+        }
+
+        int[] res = new int[nums.Length];
+        if (zeroes >= 2)
+        {
+            return res;
+        }
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (nums[i] == 0)
+            {
+                res[i] = product;
+                continue;
+            }
+
+            res[i] = zeroes == 1 ? 0 :product / nums[i];
+        }
+
+        return res;
+    }
 }
 
 public class GuessGame

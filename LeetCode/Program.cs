@@ -4,6 +4,6 @@ internal static class Program
 {
     public static void Main()
     {
-        Console.WriteLine(new Solution().ReverseVowels("race a car"));
+        Console.WriteLine(new Solution().ReverseWords("a good   example"));
     }
 }
