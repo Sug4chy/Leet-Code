@@ -192,8 +192,7 @@ public class Solution : GuessGame
     => string.Join(' ', s.Trim()
         .Split(' ', 
             StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-        .Reverse()
-        .Select(str => str.Trim()));
+        .Reverse());
     
     //238
     public int[] ProductExceptSelf(int[] nums)
@@ -229,6 +228,108 @@ public class Solution : GuessGame
         }
 
         return res;
+    }
+    
+    //334
+    public bool IncreasingTriplet(int[] nums)
+    {
+        int[] mins = new int[nums.Length];
+        mins[0] = nums[0];
+        for (int i = 1; i < mins.Length; i++)
+        {
+            mins[i] = Math.Min(nums[i], mins[i - 1]);
+        }
+
+        int[] maxs = new int[nums.Length];
+        maxs[^1] = nums[^1];
+        for (int i = maxs.Length - 2; i >= 0; i--)
+        {
+            maxs[i] = Math.Max(nums[i], maxs[i + 1]);
+        }
+
+        return nums.Where((t, i) => t > mins[i] && t < maxs[i]).Any();
+    }
+    
+    //443
+    public int Compress(char[] chars)
+    {
+        int i = 0, j = 0;
+        while (i < chars.Length)
+        {
+            char current = chars[i];
+            int counter = 0;
+
+            while (i < chars.Length && chars[i] == current)
+            {
+                i++;
+                counter++;
+            }
+
+            chars[j++] = current;
+            if (counter <= 1)
+            {
+                continue;
+            }
+            
+            foreach (char c in counter.ToString())
+            {
+                chars[j++] = c;
+            }
+        }
+        
+        return j;
+    }
+    
+    //392
+    public bool IsSubsequence(string s, string t)
+    {
+        if (s.Length == 0)
+        {
+            return true;
+        }
+
+        int j = 0;
+        foreach (char t1 in t.Where(t1 => t1 == s[j]))
+        {
+            j++;
+            if (j == s.Length)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
+    //2215
+    public IList<IList<int>> FindDifference(int[] nums1, int[] nums2)
+        => new List<IList<int>>
+        {
+            new HashSet<int>(nums1).Where(i => !nums2.Contains(i)).ToList(),
+            new HashSet<int>(nums2).Where(j => !nums1.Contains(j)).ToList()
+        };
+    
+    //11
+    public int MaxArea(int[] height)
+    {
+        int i = 0;
+        int j = height.Length - 1;
+        int maxArea = int.MinValue;
+        while (j > i)
+        {
+            int area = Math.Min(height[i], height[j]) * (j - i);
+            maxArea = Math.Max(maxArea, area);
+            if (height[i] <= height[j])
+            {
+                i++;
+            }
+            else
+            {
+                j--;
+            }
+        }
+
+        return maxArea;
     }
 }
 

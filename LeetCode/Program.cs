@@ -4,6 +4,11 @@ internal static class Program
 {
     public static void Main()
     {
-        Console.WriteLine(new Solution().ReverseWords("a good   example"));
+        char[] a = ['a', 'a', 'b', 'b', 'c', 'c', 'c'];
+        Console.WriteLine(new Solution().Compress(a));
+        foreach (char c in a)
+        {
+            Console.WriteLine(c);
+        }
     }
 }
