@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using LeetCode.Helpers;
 
 namespace LeetCode;
 
@@ -105,7 +106,7 @@ public class Solution : GuessGame
             j++;
         }
     }
-    
+
     //1732
     public int LargestAltitude(int[] gain)
     {
@@ -118,13 +119,13 @@ public class Solution : GuessGame
             {
                 maxAltitude = altitude;
             }
-            
+
             altitude += gain[i];
         }
 
         return maxAltitude;
     }
-    
+
     //1431
     public IList<bool> KidsWithCandies(int[] candies, int extraCandies)
     {
@@ -132,21 +133,25 @@ public class Solution : GuessGame
         return candies.Select(c => c + extraCandies >= max)
             .ToList();
     }
-    
+
     //605
     public bool CanPlaceFlowers(int[] flowerbed, int n)
     {
         bool prevIsEmpty = true;
-        for (int i = 0; i < flowerbed.Length && n > 0; i++) {
+        for (int i = 0; i < flowerbed.Length && n > 0; i++)
+        {
             bool empty = flowerbed[i] == 0;
             bool nextIsEmpty = i + 1 >= flowerbed.Length || flowerbed[i + 1] == 0;
-            if (prevIsEmpty && empty && nextIsEmpty) {
+            if (prevIsEmpty && empty && nextIsEmpty)
+            {
                 flowerbed[i] = 1;
                 n--;
                 prevIsEmpty = false;
-            } else {
+            }
+            else
+            {
                 prevIsEmpty = empty;
-            }            
+            }
         }
 
         return n == 0;
@@ -156,7 +161,7 @@ public class Solution : GuessGame
     public string ReverseVowels(string s)
     {
         if (s.Length <= 1)
-        { 
+        {
             return s;
         }
 
@@ -189,17 +194,17 @@ public class Solution : GuessGame
 
     //151
     public string ReverseWords(string s)
-    => string.Join(' ', s.Trim()
-        .Split(' ', 
-            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-        .Reverse());
-    
+        => string.Join(' ', s.Trim()
+            .Split(' ',
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Reverse());
+
     //238
     public int[] ProductExceptSelf(int[] nums)
     {
         int zeroes = 0;
         int product = 1;
-        foreach (int i in nums) 
+        foreach (int i in nums)
         {
             if (i != 0)
             {
@@ -224,12 +229,12 @@ public class Solution : GuessGame
                 continue;
             }
 
-            res[i] = zeroes == 1 ? 0 :product / nums[i];
+            res[i] = zeroes == 1 ? 0 : product / nums[i];
         }
 
         return res;
     }
-    
+
     //334
     public bool IncreasingTriplet(int[] nums)
     {
@@ -249,7 +254,7 @@ public class Solution : GuessGame
 
         return nums.Where((t, i) => t > mins[i] && t < maxs[i]).Any();
     }
-    
+
     //443
     public int Compress(char[] chars)
     {
@@ -270,16 +275,16 @@ public class Solution : GuessGame
             {
                 continue;
             }
-            
+
             foreach (char c in counter.ToString())
             {
                 chars[j++] = c;
             }
         }
-        
+
         return j;
     }
-    
+
     //392
     public bool IsSubsequence(string s, string t)
     {
@@ -300,7 +305,7 @@ public class Solution : GuessGame
 
         return false;
     }
-    
+
     //2215
     public IList<IList<int>> FindDifference(int[] nums1, int[] nums2)
         => new List<IList<int>>
@@ -308,7 +313,7 @@ public class Solution : GuessGame
             new HashSet<int>(nums1).Where(i => !nums2.Contains(i)).ToList(),
             new HashSet<int>(nums2).Where(j => !nums1.Contains(j)).ToList()
         };
-    
+
     //11
     public int MaxArea(int[] height)
     {
@@ -330,6 +335,93 @@ public class Solution : GuessGame
         }
 
         return maxArea;
+    }
+
+    //872
+    public bool LeafSimilar(TreeNode root1, TreeNode root2)
+    {
+        var leafs1 = new List<int>();
+        GetTreeLeafs(root1, leafs1);
+        var leafs2 = new List<int>();
+        GetTreeLeafs(root2, leafs2);
+        return leafs1.SequenceEqual(leafs2);
+    }
+
+    private void GetTreeLeafs(TreeNode root, IList<int> leafs)
+    {
+        if (root is null)
+        {
+            return;
+        }
+
+        if (root.left is null && root.right is null)
+        {
+            leafs.Add(root.val);
+        }
+
+        GetTreeLeafs(root.left, leafs);
+        GetTreeLeafs(root.right, leafs);
+    }
+
+    //104
+    public int MaxDepth(TreeNode root)
+    {
+        if (root is null)
+        {
+            return 0;
+        }
+
+        int leftDepth = MaxDepth(root.left);
+        int rightDepth = MaxDepth(root.right);
+        return Math.Max(leftDepth, rightDepth) + 1;
+    }
+
+    //700
+    public TreeNode SearchBST(TreeNode root, int val)
+    {
+        return RecursiveNodeSearch(root, val);
+    }
+
+    private TreeNode RecursiveNodeSearch(TreeNode node, int val)
+    {
+        if (node is null)
+        {
+            return null;
+        }
+
+        if (node.val == val)
+        {
+            return node;
+        }
+
+        if (node.val > val) return RecursiveNodeSearch(node.left, val);
+        if (node.val < val) return RecursiveNodeSearch(node.right, val);
+        return null;
+    }
+    
+    //1679
+    public int MaxOperations(int[] nums, int k)
+    {
+        var needPair = new Dictionary<int, int>();
+        int resCounter = 0;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int lastAdded = 0;
+            if (!needPair.ContainsKey(nums[i]))
+            {
+                needPair[nums[i]] = k - nums[i];
+                lastAdded = nums[i];
+            }
+
+            if (k - nums[i] != lastAdded && needPair.ContainsKey(k - nums[i]))
+            {
+                needPair.Remove(nums[i]);
+                needPair.Remove(k - nums[i]);
+                resCounter++;
+            }
+        }
+
+        return resCounter;
     }
 }
 
